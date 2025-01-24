@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Todo App !!</h1>
+    <form style="display: inline;" action="<%= isEditing ? `/update/${editingTodo.id}` : " /create" %>" method="post">
+        <input value="<%= isEditing ? editingTodo.title : "" %>" type="text" name="title" placeholder="Title">
+        <input value="<%= isEditing ? editingTodo.content : "" %>" type="text" name="content" placeholder="Content">
+        <button type="submit">
+            <%= isEditing ? "Update todo" : "Add todo" %>
+        </button>
+    </form>
+
+    <% if (isEditing) { %>
+        <form style="display: inline;" action="/cancel" method="post">
+            <button type="submit">Cancel</button>
+        </form> %>
+        <% } %>
+
+            <% if (message) { %>
+                <p>
+                    <%= message %>
+                </p>
+                <% } %>
+
+                    <% if (todos && todos.length> 0) { %>
+                        <% todos.forEach(element=> { %>
+                            <p><strong>
+                                    <%= element.title %>
+                                </strong>: <%= element.content %>
+                                    <form style="display: inline;" action="/Edit/<%= element.id %>" method="post">
+                                        <button type="submit">Edit</button>
+                                    </form>
+                                    <form style="display: inline;" action="/delete/<%= element.id %>" method="post">
+                                        <button type="submit">Delete</button>
+                                    </form>
+                            </p>
+                            <% }) %>
+                                <% } else { %>
+                                    <p>No current todos. Add a task to get started.</p>
+                                    <% } %>
+</body>
+
+</html>
